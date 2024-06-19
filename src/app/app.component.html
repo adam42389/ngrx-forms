@@ -17,3 +17,16 @@
     <button mat-flat-button (click)="resetClick()">Reset Form</button>
   </div>
 </form>
+
+<h4>Basic mat-select</h4>
+<mat-form-field>
+  <mat-label>Favorite food</mat-label>
+  <mat-select [value]="foodVal">
+    @for (food of foods; track food) {
+    <mat-option [value]="food.value">{{ food.viewValue }}</mat-option>
+    }
+  </mat-select>
+</mat-form-field>
+<div>
+  <button mat-flat-button (click)="changeSelect()">Change Select</button>
+</div>
