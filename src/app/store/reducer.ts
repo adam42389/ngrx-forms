@@ -1,5 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
-import { resetForm, setForm, toggleVisible } from './actions';
+import { resetForm, setDrink, toggleVisible } from './actions';
+import { state } from '@angular/animations';
 
 export interface FormState {
   food: string;
@@ -19,7 +20,7 @@ export const reducerKey = 'myForm';
 
 export const formReducer = createReducer(
   initialState,
-  on(setForm, (state, values) => values),
+  on(setDrink, (state, value) => ({ ...state, drink: value.drink })),
   on(resetForm, (state) => initialState),
   on(
     toggleVisible,

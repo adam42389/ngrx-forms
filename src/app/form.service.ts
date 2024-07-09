@@ -2,9 +2,8 @@ import { Injectable } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { take } from 'rxjs';
-import { setForm } from './store/actions';
-import { FormState } from './store/reducer';
 import { isEnabled, selectForm } from './store/selector';
+import { setDrink } from './store/actions';
 
 @Injectable()
 export class MyFormService {
@@ -24,9 +23,9 @@ export class MyFormService {
       else this.myForm.disable();
     });
 
-    // this.myForm.valueChanges.subscribe((values) => {
-    //   this.store$.dispatch(setForm(values as FormState));
-    // });
+    this.myForm.controls.drink.valueChanges.subscribe((value) => {
+      if (value) this.store$.dispatch(setDrink({ drink: value }));
+    });
   }
   onSubmit = () => {
     console.log('submit', this.myForm.value);
