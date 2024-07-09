@@ -1,6 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 import { resetForm, setDrink, toggleVisible } from './actions';
 import { state } from '@angular/animations';
+import { createImmerReducer } from 'ngrx-immer/store';
 
 export interface FormState {
   food: string;
@@ -18,12 +19,15 @@ export const initialState: FormState = {
 
 export const reducerKey = 'myForm';
 
-export const formReducer = createReducer(
+export const formReducer = createImmerReducer(
   initialState,
-  on(setDrink, (state, value) => ({ ...state, drink: value.drink })),
+  on(setDrink, (state, value) => {
+    state.drink = value.drink;
+    return state;
+  }),
   on(resetForm, (state) => initialState),
-  on(
-    toggleVisible,
-    (state): FormState => ({ ...state, enabled: !state.enabled })
-  )
+  on(toggleVisible, (state): FormState => {
+    state.enabled = !state.enabled;
+    return state;
+  })
 );
