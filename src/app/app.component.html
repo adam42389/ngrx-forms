@@ -1,32 +1,52 @@
 <h4>Basic mat-select</h4>
+<div *ngIf="this.selector$ | async as data">
+  <form
+    [formGroup]="formService.myForm"
+    (ngSubmit)="this.formService.onSubmit()"
+  >
+    <div>
+      <mat-form-field class="example-full-width" *ngIf="data.visible">
+        <mat-label>Favorite food</mat-label>
+        <input matInput placeholder="Ex. Pizza" formControlName="food" />
+        <mat-error>No good</mat-error>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field class="example-full-width">
+        <mat-label>Favorite drink</mat-label>
+        <input matInput placeholder="Ex. Soda" formControlName="drink" />
+        <mat-error>No good</mat-error>
+      </mat-form-field>
+    </div>
+    <div>
+      <button type="button" mat-flat-button (click)="resetClick()">
+        Reset Form
+      </button>
+      <button type="button" mat-flat-button (click)="toggleVisible()">
+        Toggle Enabled
+      </button>
+    </div>
+    <button
+      mat-flat-button
+      type="submit"
+      [disabled]="!this.formService.myForm.valid"
+    >
+      Submit
+    </button>
+  </form>
 
-<form [formGroup]="formService.myForm">
+  <h4>Basic mat-select</h4>
+  <mat-form-field>
+    <mat-label>Favorite food</mat-label>
+    <mat-select [value]="foodVal">
+      @for (food of foods; track food) {
+      <mat-option [value]="food.value">{{ food.viewValue }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
   <div>
-    <mat-form-field class="example-full-width">
-      <mat-label>Favorite food</mat-label>
-      <input matInput placeholder="Ex. Pizza" formControlName="food" />
-    </mat-form-field>
+    <button mat-flat-button (click)="changeSelect()" [disabled]="!data.enabled">
+      Change Select
+    </button>
   </div>
-  <div>
-    <mat-form-field class="example-full-width">
-      <mat-label>Favorite drink</mat-label>
-      <input matInput placeholder="Ex. Soda" formControlName="drink" />
-    </mat-form-field>
-  </div>
-  <div>
-    <button mat-flat-button (click)="resetClick()">Reset Form</button>
-  </div>
-</form>
-
-<h4>Basic mat-select</h4>
-<mat-form-field>
-  <mat-label>Favorite food</mat-label>
-  <mat-select [value]="foodVal">
-    @for (food of foods; track food) {
-    <mat-option [value]="food.value">{{ food.viewValue }}</mat-option>
-    }
-  </mat-select>
-</mat-form-field>
-<div>
-  <button mat-flat-button (click)="changeSelect()">Change Select</button>
 </div>
